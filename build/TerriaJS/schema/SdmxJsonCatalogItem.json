@@ -1,0 +1,176 @@
+{
+  "type": "object",
+  "defaultProperties": [
+    "name",
+    "type",
+    "url"
+  ],
+  "properties": {
+    "dataUrlComponent": {
+      "type": "string",
+      "title": "Data URL component",
+      "description": "The 'data' SDMX URL component, eg. 'data' in http://stats.oecd.org/sdmx-json/data/QNA.\nDefaults to 'data'."
+    },
+    "sdmxVersionNumber": {
+      "type": "number",
+      "title": "Sdmx version number",
+      "description": "The SDMX version number\nDefaults to 2.0."
+    },
+    "measureDimensionId": {
+      "type": "string",
+      "title": "Measure dimension ID",
+      "description": "The measure dimension id\nDefaults to 'MEASURE'."
+    },
+    "dataflowUrlComponent": {
+      "type": "string",
+      "title": "Dataflow URL component",
+      "description": "The 'dataflow' SDMX URL component, eg. 'dataflow' in http://stats.oecd.org/sdmx-json/dataflow/QNA.\nDefaults to 'dataflow'."
+    },
+    "providerId": {
+      "type": "string",
+      "title": "Provider ID",
+      "description": "The provider id in the SDMX URL, eg. the final 'all' in http://stats.oecd.org/sdmx-json/data/QNA/.../all.\nDefaults to 'all'."
+    },
+    "regionTypeDimensionId": {
+      "type": "string",
+      "title": "Region type dimension ID",
+      "description": "The SDMX region-type dimension id used with the region code to set the region type.\nUsually defaults to 'REGIONTYPE'."
+    },
+    "regionDimensionId": {
+      "type": "string",
+      "title": "Region dimension ID",
+      "description": "The SDMX region dimension id, which is not displayed as a user-choosable dimension. Defaults to 'REGION'."
+    },
+    "frequencyDimensionId": {
+      "type": "string",
+      "title": "Frequency dimension ID",
+      "description": "The SDMX frequency dimension id. Defaults to 'FREQUENCY'."
+    },
+    "timePeriodDimensionId": {
+      "type": "string",
+      "title": "Time period dimension ID",
+      "description": "The SDMX time period dimension id, which is not displayed as a user-choosable dimension. Defaults to 'TIME_PERIOD'."
+    },
+    "regionType": {
+      "type": "string",
+      "title": "Region type",
+      "description": "The regiontype directly, which is an alternative to including a regiontype in the data.\nEg. \"cnt3\" would tell us that we should use cnt3 as the table column name.\nBy default this is undefined."
+    },
+    "regionNameTemplate": {
+      "type": "string",
+      "title": "Region name template",
+      "description": "A Mustache template used to turn the name of the region provided in the \"regionType\" variable\ninto a csv-geo-au-compliant column name. The Mustache variable \"{{name}}\" holds the original name.\nYou can use this to specify a year in the name, even if it is absent on the server.\nEg. \"{{name}}_code_2016\" converts STE to STE_code_2016.\nBy default this is undefined. If it is undefined, the following rules are applied:\n  - If there's a _, replace the last one with _code_; else append _code. So SA4 -> SA4_code; SA4_2011 -> SA4_code_2011.\n  - If the name ends in 4 digits without an underscore, insert \"_code_\", eg. LGA2011 -> LGA_code_2011."
+    },
+    "selectedInitially": {
+      "type": "object",
+      "title": "Selected initially",
+      "description": "The concepts which are initially selected, eg. {\"MEASURE\": [\"GDP\", \"GNP\"], \"FREQUENCY\": [\"A\"]}.\nDefaults to the first value in each dimension (when undefined)."
+    },
+    "singleValuedDimensionIds": {
+      "type": "array",
+      "title": "Single valued dimension ids",
+      "description": "The dimensions for which you can only select a single value at a time.\nThe frequency and regiontype dimensions are added to this list in allSingleValuedDimensionIds.",
+      "format": "tabs",
+      "items": {
+        "type": "string"
+      }
+    },
+    "startTime": {
+      "type": "string",
+      "title": "Start time",
+      "description": "The startTime to use as part of the ?startTime=...&endTime=... query parameters.\nCurrently a string, but could be extended to be an object with frequency codes as keys.\nBy default this is undefined, and not used as part of the query."
+    },
+    "endTime": {
+      "type": "string",
+      "title": "End time",
+      "description": "The endTime to use as part of the ?startTime=...&endTime=... query parameters.\nCurrently a string, but could be extended to be an object with frequency codes as keys.\nBy default this is undefined, and not used as part of the query."
+    },
+    "whitelist": {
+      "type": "object",
+      "title": "Whitelist",
+      "description": "Gets or sets each dimension's allowed values, by id. Eg. {\"SUBJECT\": [\"GDP\", \"GNP\"], \"FREQUENCY\": [\"A\"]}.\nIf not defined, all values are allowed.\nIf a dimension is not present, all values for that dimension are allowed.\nNote this will not be applied to regions or time periods.\nThe expression is first matched as a regular expression (sandwiched between ^ and &);\nif that fails, it is matched as a literal string.  So eg. \"[0-9]+\" will match 015 but not A015.",
+      "additionalProperties": {
+        "type": "boolean",
+        "format": "checkbox"
+      }
+    },
+    "blacklist": {
+      "type": "object",
+      "title": "Blacklist",
+      "description": "Gets or sets each dimension's non-allowed values, by id. Eg. {\"COB\": [\"TOTAL\", \"1\"], \"FREQUENCY\": [\"Q\"]}.\nIf not defined, all values are allowed (subject to the whitelist).\nIf a dimension is not present, all values for that dimension are allowed (subject to the whitelist).\nNote this will not be applied to regions or time periods.\nIf the same value is in both the whitelist and the blacklist, the blacklist wins.\nThe expression is first matched as a regular expression (sandwiched between ^ and &);\nif that fails, it is matched as a literal string.  So eg. \"[0-9]+\" will match 015 but not A015.",
+      "additionalProperties": {
+        "type": "boolean",
+        "format": "checkbox"
+      }
+    },
+    "aggregatedDimensionIds": {
+      "type": "object",
+      "title": "Aggregated dimension ids",
+      "description": "An array of dimension ids whose values should not be shown in the Now Viewing panel;\ninstead, their values should be aggregated and treated as a single value.\nEg. useful if a dimension is repeated (eg. STATE and REGION).\nNOTE: Currently only a single aggregatedDimensionId is supported.\nThis should not be applied to regions or time periods."
+    },
+    "sortValues": {
+      "type": "string",
+      "title": "Sort values",
+      "description": "Gets or sets how to re-sort the values that appear in the SDMX-JSON response, in the Now Viewing panel.\nThe default is null, so that the order is maintained (except for totalValueIds, which are moved to the top).\nBy setting this to 'name' or 'id', the values are sorted into alphabetical and/or numerical order either by name or by id,\nrespectively."
+    },
+    "totalValueIds": {
+      "type": "object",
+      "title": "Total value ids",
+      "description": "Gets or sets value ids for each dimension which correspond to total values.\nPlace the grand total first.\nIf all dimensions (except region-type, region and frequency) have totals\navailable, then a \"Display as a percentage of regional total\" option becomes available.\nEg. Suppose AGE had \"10\" for 10 year olds, etc, plus \"ALL\" for all ages, \"U21\" and \"21PLUS\" for under and over 21 year olds.\nThen you would want to specify {\"AGE\": [\"ALL\", \"U21\", \"21PLUS\"]}.\nIn this case, when the user selects one of these values, any other values will be unselected.\nAnd when the user selects any other value (eg. \"10\"), if any of these values were selected, they will be unselected.\nIn addition, any values provided under a wildcard \"*\" key are used for _all_ dimensions, and are shown first in the list,\nif present, eg. {\"*\": [\"ALL\"], \"AGE\": [\"U21\", \"21PLUS\"]}."
+    },
+    "cleanFootnotes": {
+      "type": "boolean",
+      "title": "Clean footnotes",
+      "description": "Gets or sets whether to remove trailing \"(x)\"s from the values that appear in the SDMX-JSON response.\nIf true, for example, \"Total responses(c)\" would be replaced with \"Total responses\".\nThis is a workaround for an ABS-specific issue.\nDefault false.",
+      "format": "checkbox"
+    },
+    "canDisplayPercent": {
+      "type": "boolean",
+      "title": "Can display percent",
+      "description": "Gets or sets whether this item can show percentages instead of raw values.\nThis is set to true automatically if total value ids are available on all necessary columns.",
+      "format": "checkbox"
+    },
+    "displayPercent": {
+      "type": "boolean",
+      "title": "Display percent",
+      "description": "Gets or sets whether to show percentages or raw values.",
+      "format": "checkbox"
+    },
+    "cannotSum": {
+      "type": [
+        "object",
+        "boolean"
+      ],
+      "title": "Cannot sum",
+      "description": "A mapping of concept ids to arrays of values which, if selected, mean the results cannot be summed.\nIf one of these values is chosen:\n- Does not show the \"canDisplayPercent\" option.\n- Explains to the user that it can't show multiple values of concepts.\neg. {\"MEASURE\": [\"rate\"]}.\nCan also be the boolean \"true\", if it should apply to all selections.\nDefaults to none."
+    },
+    "cannotDisplayPercentMap": {
+      "type": "object",
+      "title": "Cannot display percent map",
+      "description": "Deprecated. Use cannotSum instead.\nDefaults to none."
+    },
+    "displayChoicesBeforeLegend": {
+      "type": "boolean",
+      "title": "Display choices before legend",
+      "description": "A flag which determines whether the legend comes before (false) or after (true) the display variable choice.\nDefault true.",
+      "format": "checkbox"
+    },
+    "forceShowDimensionIds": {
+      "type": "boolean",
+      "title": "Force show dimension ids",
+      "description": "An array of dimension ids which, if present, should be shown to the user, even if there is only one value.\nThis is useful if the name of the dataset doesn't convey what is in it, but one of the dimension values does. Eg. ['MEASURE'].\nDefault [].",
+      "format": "checkbox"
+    }
+  },
+  "allOf": [
+    {
+      "$ref": "CatalogItem.json"
+    },
+    {
+      "$ref": "TableCatalogItem.json"
+    },
+    {
+      "$ref": "CatalogMember.json"
+    }
+  ]
+}

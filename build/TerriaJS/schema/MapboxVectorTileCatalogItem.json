@@ -1,0 +1,61 @@
+{
+  "type": "object",
+  "defaultProperties": [
+    "name",
+    "type",
+    "url"
+  ],
+  "properties": {
+    "lineColor": {
+      "type": "string",
+      "title": "Line color",
+      "description": "The outline color of the features, specified as a CSS color string."
+    },
+    "fillColor": {
+      "type": "string",
+      "title": "Fill color",
+      "description": "The fill color of the features, specified as a CSS color string."
+    },
+    "layer": {
+      "type": "string",
+      "title": "Layer",
+      "description": "The name of the layer to use the Mapbox vector tiles."
+    },
+    "idProperty": {
+      "type": "string",
+      "title": "ID property",
+      "description": "The name of the property that is a unique ID for features."
+    },
+    "nameProperty": {
+      "type": "string",
+      "title": "Name property",
+      "description": "The name of the property from which to obtain the name of features."
+    },
+    "maximumNativeZoom": {
+      "type": "number",
+      "title": "Maximum native zoom",
+      "description": "The maximum zoom level for which tile files exist."
+    },
+    "maximumZoom": {
+      "type": "number",
+      "title": "Maximum zoom",
+      "description": "The maximum zoom level that can be displayed by using the data in the\nMapboxVectorTileCatalogItem's maximumNativeZoom tiles."
+    },
+    "minimumZoom": {
+      "type": "number",
+      "title": "Minimum zoom",
+      "description": "The minimum zoom level for which tile files exist."
+    }
+  },
+  "allOf": [
+    {
+      "$ref": "CatalogItem.json"
+    },
+    {
+      "$ref": "ImageryLayerCatalogItem.json"
+    },
+    {
+      "$ref": "CatalogMember.json"
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "type": "object",
+  "defaultProperties": [
+    "name",
+    "type",
+    "url"
+  ],
+  "properties": {
+    "charSet": {
+      "type": "string",
+      "title": "Char set",
+      "description": "The character set of the data, which overrides the file information if present. Default is undefined."
+    },
+    "initialTimeSource": {
+      "type": "string",
+      "title": "Initial time source",
+      "description": "Options for the value of the animation timeline at start. Valid options in config file are:\n    initialTimeSource: \"present\"                            // closest to today's date\n    initialTimeSource: \"start\"                              // start of time range of animation\n    initialTimeSource: \"end\"                                // end of time range of animation\n    initialTimeSource: An ISO8601 date e.g. \"2015-08-08\"    // specified date or nearest if date is outside range"
+    },
+    "isCsvForCharting": {
+      "type": "boolean",
+      "title": "Is CSV for charting",
+      "description": "Flag to be used for charting, whether this item is generated for the purposes of drawing a chart",
+      "format": "checkbox"
+    }
+  },
+  "allOf": [
+    {
+      "$ref": "CatalogItem.json"
+    },
+    {
+      "$ref": "TableCatalogItem.json"
+    },
+    {
+      "$ref": "CatalogMember.json"
+    }
+  ]
+}

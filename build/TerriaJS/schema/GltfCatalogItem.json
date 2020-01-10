@@ -1,0 +1,63 @@
+{
+  "type": "object",
+  "defaultProperties": [
+    "name",
+    "type",
+    "url"
+  ],
+  "properties": {
+    "url": {
+      "type": "string",
+      "title": "URL",
+      "description": "The URL of the glTF model."
+    },
+    "startTime": {
+      "type": "string",
+      "title": "Start time",
+      "description": "The start time, as an ISO8601 string, to use when this catalog item is active\non the timeline. The time affects things like lighting and shadows. The"
+    },
+    "stopTime": {
+      "type": "string",
+      "title": "Stop time",
+      "description": "The stop time, as an ISO8601 string, to use when this catalog item is active\non the timeline. The time affects things like lighting and shadows. The"
+    },
+    "initialTimeSource": {
+      "type": "string",
+      "title": "Initial time source",
+      "description": "The value of the animation timeline at start. Valid options in config file are:\n    initialTimeSource: \"present\"                            // closest to today's date\n    initialTimeSource: \"start\"                              // start of time range of animation\n    initialTimeSource: \"end\"                                // end of time range of animation\n    initialTimeSource: An ISO8601 date e.g. \"2015-08-08\"    // specified date or nearest if date is outside range"
+    },
+    "origin": {
+      "type": "object",
+      "title": "Origin",
+      "description": "The origin of the model, expressed as a longitude and latitude in degrees and\na height in meters. If this property is specified, the model's axes will have X pointing\nEast, Y pointing North, and Z pointing Up. If not specified, the model is located in the\nEarth-Centered Earth-Fixed frame."
+    },
+    "shadows": {
+      "type": "string",
+      "title": "Shadows",
+      "description": "Indicates whether this tileset casts and receives shadows. Valid values are\n'NONE', 'BOTH', 'CAST', and 'RECEIVE'."
+    },
+    "upAxis": {
+      "type": "string",
+      "title": "Up axis",
+      "description": "The model's up-axis. By default models are y-up according to the glTF spec,\nhowever geo-referenced models will typically be z-up. Valid values are 'X', 'Y', or 'Z'."
+    },
+    "forwardAxis": {
+      "type": "string",
+      "title": "Forward axis",
+      "description": "Gets the model's forward axis. By default, glTF 2.0 models are Z-forward according to the glTF spec, however older\nglTF (1.0, 0.8) models used X-forward. Valid values are 'X' or 'Z'."
+    },
+    "featureInfoUrlTemplate": {
+      "type": "string",
+      "title": "Feature info URL template",
+      "description": "A URL template that is used to request additional feature information for this model."
+    }
+  },
+  "allOf": [
+    {
+      "$ref": "CatalogItem.json"
+    },
+    {
+      "$ref": "CatalogMember.json"
+    }
+  ]
+}

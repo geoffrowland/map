@@ -1,0 +1,42 @@
+{
+  "type": "object",
+  "defaultProperties": [
+    "name",
+    "type",
+    "url"
+  ],
+  "properties": {
+    "data": {
+      "type": "object",
+      "title": "Data",
+      "description": "The GeoJSON data, represented as a binary blob, object literal, or a Promise for one of those things.\nIf this property is set, CatalogItem's url is ignored."
+    },
+    "dataSourceUrl": {
+      "type": "string",
+      "title": "Data source URL",
+      "description": "The URL from which the GeoJsonCatalogItem's data was obtained.  This will be used\nto resolve any resources linked in the GeoJSON file, if any."
+    },
+    "style": {
+      "type": "object",
+      "title": "Style",
+      "description": "An object of style information which will be used instead of the default, but won't override\nstyles set on individual GeoJSON features. Styles follow the SimpleStyle spec: https://github.com/mapbox/simplestyle-spec/tree/master/1.1.0\n`marker-opacity` and numeric values for `marker-size` are also supported."
+    },
+    "clampToGround": {
+      "type": "boolean",
+      "title": "Clamp to ground",
+      "description": "A value indicating whether the features in this GeoJSON should be clamped to the terrain surface.",
+      "format": "checkbox"
+    }
+  },
+  "allOf": [
+    {
+      "$ref": "CatalogItem.json"
+    },
+    {
+      "$ref": "DataSourceCatalogItem.json"
+    },
+    {
+      "$ref": "CatalogMember.json"
+    }
+  ]
+}

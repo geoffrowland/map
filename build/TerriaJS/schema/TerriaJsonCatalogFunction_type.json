@@ -1,0 +1,27 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "options": {
+        "hidden": true
+      },
+      "type": "string",
+      "enum": [
+        "terria-json"
+      ]
+    }
+  },
+  "description": "A CatalogFunction that issues an HTTP GET to a service with a set of query parameters specified by the\nTerriaJsonCatalogFunction's inputs property, and expects to receive back TerriaJS catalog/share JSON.\n\nWhen this `CatalogFunction` is added to the catalog, TerriaJS automatically creates a user interface for it\nbased on the inputs. When the user clicks \"Run Analysis\", it issues an HTTP GET with the user-specified\ninputs supplied as part of the query string. The returned TerriaJS catalog/share JSON can add items\nto the workbench, configure the catalog, change the camera view, and more.\n\nExample:\n\n```\n{\n  \"name\": \"Simple Example\",\n  \"type\": \"terria-json\",\n  \"url\": \"https://putsreq.com/PK2GvS6jHfWhlBmkadrG\",\n  \"inputs\": [\n    {\n      \"id\": \"position\",\n      \"type\": \"point\",\n      \"name\": \"Position\",\n      \"description\": \"The position to pass to the service.\",\n      \"formatter\": \"longitudeCommaLatitude\"\n    },\n    {\n      \"id\": \"someOtherParameter\",\n      \"type\": \"string\",\n      \"name\": \"Some Other Parameter\",\n      \"description\": \"This is another parameter that will be passed to the service.\"\n    }\n  ]\n}\n```\n\nFor this `CatalogFunction` TerriaJS will present a user interface with two elements: a position on the map\nand a string. When invoked, TerriaJS will GET a URL like:\n`https://putsreq.com/PK2GvS6jHfWhlBmkadrG?position=151.0%2C-33.0&someOtherParameter=some%20text`\n\nThe service is expected to return JSON using the `application/json` content type, and have a body\nwith any of the following:\n\n   * A single catalog member\n\nFor example:\n\n```\n{\n  \"type\": \"csv\",\n  \"data\": \"POSTCODE,value\\n2000,1\"\n}\n```\n\nThe catalog member will be added to the catalog inside a catalog group directly below this\n`CatalogFunction`. Catalog items will also be added to the workbench unless `isEnabled` is\nexplicitly set to false.\n\nIf the catalog item does not have a name, as in the above example, its name will be the name of\nthis `CatalogFunction` followed by the date and time it was invoked in ISO8601 format. If the catalog item\ndoes not have a description, it will be given a description explaining that this is the result of executing\na service and will include the input parameters sent to the service.\n\n   * An array of catalog members\n\nAn array of catalog members as described above.\n\nFor example:\n\n```\n[\n  {\n    \"type\": \"csv\",\n    \"data\": \"POSTCODE,value\\n2000,1\"\n  },\n  {\n    \"name\": \"My Result WMS Layer\",\n    \"type\": \"wms\",\n    \"url\": \"http://ereeftds.bom.gov.au/ereefs/tds/wms/ereefs/mwq_gridAgg_P1A\",\n    \"layers\": \"Chl_MIM_mean\"\n  }\n]\n```\n\n   * A catalog file\n\nFor example:\n\n```\n{\n  \"catalog\": [\n    {\n      \"name\": \"National Datasets\",\n      \"type\": \"group\",\n      \"items\": [\n        {\n          \"name\": \"My Result WMS Layer\",\n          \"type\": \"wms\",\n          \"url\": \"http://ereeftds.bom.gov.au/ereefs/tds/wms/ereefs/mwq_gridAgg_P1A\",\n          \"layers\": \"Chl_MIM_mean\",\n          \"isEnabled\": true\n        }\n      ]\n    }\n  ],\n  \"initialCamera\": {\n    \"west\": 141.0,\n    \"south\": -26.0,\n    \"east\": 157.0,\n    \"north\": -9.0\n  }\n}\n```\n\nPlease note that in this case, catalog items are _not_ automatically enabled or named.\nThe `name` property is required. If `isEnabled` is not set to `true`, the catalog item\nwill not appear on the workbench.\n\n   * Share data\n\nSimilar to the above except that it allows multiple init sources (catalog files) and has a\nversion property for backward compatibility. For example:\n\n```\n{\n  \"version\": \"0.0.05\",\n  \"initSources\": [\n    {\n      \"catalog\": [\n        {\n          \"name\": \"National Datasets\",\n          \"type\": \"group\",\n          \"items\": [\n            {\n              \"name\": \"My Result WMS Layer\",\n              \"type\": \"wms\",\n              \"url\": \"http://ereeftds.bom.gov.au/ereefs/tds/wms/ereefs/mwq_gridAgg_P1A\",\n              \"layers\": \"Chl_MIM_mean\",\n              \"isEnabled\": true\n            }\n          ]\n        }\n      ],\n    },\n    {\n      \"initialCamera\": {\n        \"west\": 141.0,\n        \"south\": -26.0,\n        \"east\": 157.0,\n        \"north\": -9.0\n      }\n    }\n  ]\n}\n```",
+  "title": "Terria JSON Catalog Function",
+  "allOf": [
+    {
+      "$ref": "CatalogFunction.json"
+    },
+    {
+      "$ref": "CatalogMember.json"
+    },
+    {
+      "$ref": "TerriaJsonCatalogFunction.json"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "type": "object",
+  "defaultProperties": [
+    "name",
+    "type",
+    "url"
+  ],
+  "properties": {
+    "layerDef": {
+      "type": "string",
+      "title": "Layer def",
+      "description": "The 'layerDef' string to pass to the server when requesting geometry.\nBy default, we use a string that always evaluates to true: \"1=1\"."
+    },
+    "useStyleInformationFromService": {
+      "type": "boolean",
+      "title": "Use style information from service",
+      "description": "If set to true attempts to symbolise the data using the drawingInfo\nobject available in the service endpoint. Defaults to false.\nCurrently supports getting fill-color, fill-opacity, stroke-color, stroke-width\nfrom simple and uniqueVals renderers.",
+      "format": "checkbox"
+    },
+    "clampToGround": {
+      "type": "boolean",
+      "title": "Clamp to ground",
+      "description": "A value indicating whether the features in this service should be clamped to the terrain surface.",
+      "format": "checkbox"
+    }
+  },
+  "allOf": [
+    {
+      "$ref": "CatalogItem.json"
+    },
+    {
+      "$ref": "CatalogMember.json"
+    }
+  ]
+}

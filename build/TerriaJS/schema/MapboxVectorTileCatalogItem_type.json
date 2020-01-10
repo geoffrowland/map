@@ -1,0 +1,30 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "options": {
+        "hidden": true
+      },
+      "type": "string",
+      "enum": [
+        "mvt"
+      ]
+    }
+  },
+  "description": "A ImageryLayerCatalogItem representing a rasterised Mapbox vector tile layer.",
+  "title": "Mapbox Vector Tile",
+  "allOf": [
+    {
+      "$ref": "CatalogItem.json"
+    },
+    {
+      "$ref": "ImageryLayerCatalogItem.json"
+    },
+    {
+      "$ref": "CatalogMember.json"
+    },
+    {
+      "$ref": "MapboxVectorTileCatalogItem.json"
+    }
+  ]
+}

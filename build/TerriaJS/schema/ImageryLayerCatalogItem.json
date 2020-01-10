@@ -1,0 +1,91 @@
+{
+  "type": "object",
+  "defaultProperties": [
+    "name",
+    "type",
+    "url"
+  ],
+  "properties": {
+    "opacity": {
+      "type": "number",
+      "title": "Opacity",
+      "description": "The opacity (alpha) of the data item, where 0.0 is fully transparent and 1.0 is\nfully opaque."
+    },
+    "treat404AsError": {
+      "type": "boolean",
+      "title": "Treat404 as error",
+      "description": "A value indicating whether a 404 response code when requesting a tile should be\ntreated as an error.  If false, 404s are assumed to just be missing tiles and need not be\nreported to the user.",
+      "format": "checkbox"
+    },
+    "treat403AsError": {
+      "type": "boolean",
+      "title": "Treat403 as error",
+      "description": "A value indicating whether a 403 response code when requesting a tile should be\ntreated as an error.  If false, 403s are assumed to just be missing tiles and need not be\nreported to the user.",
+      "format": "checkbox"
+    },
+    "ignoreUnknownTileErrors": {
+      "type": "boolean",
+      "title": "Ignore unknown tile errors",
+      "description": "A value indicating whether non-specific (no HTTP status code) tile errors should be ignored. This is a\nlast resort, for dealing with odd cases such as data sources that return non-images (eg XML) with a 200 status code.\nNo error messages will be shown to the user.",
+      "format": "checkbox"
+    },
+    "keepOnTop": {
+      "type": "boolean",
+      "title": "Keep on top",
+      "description": "Keeps the layer on top of all other imagery layers.",
+      "format": "checkbox"
+    },
+    "clipToRectangle": {
+      "type": "boolean",
+      "title": "Clip to rectangle",
+      "description": "A value indicating whether this dataset should be clipped to the CatalogItem's rectangle.\nIf true, no part of the dataset will be displayed outside the rectangle.  This property is true by default,\nleading to better performance and avoiding tile request errors that might occur when requesting tiles outside the\nserver-specified rectangle.  However, it may also cause features to be cut off in some cases, such as if a server\nreports an extent that does not take into account that the representation of features sometimes require a larger\nspatial extent than the features themselves.  For example, if a point feature on the edge of the extent is drawn\nas a circle with a radius of 5 pixels, half of that circle will be cut off.",
+      "format": "checkbox"
+    },
+    "isRequiredForRendering": {
+      "type": "boolean",
+      "title": "Is required for rendering",
+      "description": "A value indicating whether tiles of this catalog item are required to be loaded before terrain\ntiles to which they're attached can be rendered.  This should usually be set to true for base layers and\nfalse for all others.",
+      "format": "checkbox"
+    },
+    "initialTimeSource": {
+      "type": "string",
+      "title": "Initial time source",
+      "description": "Options for the value of the animation timeline at start. Valid options in config file are:\n    initialTimeSource: \"present\"                            // closest to today's date\n    initialTimeSource: \"start\"                              // start of time range of animation\n    initialTimeSource: \"end\"                                // end of time range of animation\n    initialTimeSource: An ISO8601 date e.g. \"2015-08-08\"    // specified date or nearest if date is outside range"
+    },
+    "showOnChart": {
+      "type": "boolean",
+      "title": "Show on chart",
+      "description": "Whether to show imagery availability on charts.",
+      "format": "checkbox"
+    },
+    "dontChartAlone": {
+      "type": "boolean",
+      "title": "Dont chart alone",
+      "description": "Whether this layer is sufficient to warrant a chart.",
+      "format": "checkbox"
+    },
+    "chartColor": {
+      "type": "string",
+      "title": "Chart color",
+      "description": "The color of how the dataset will displayed on the chart"
+    },
+    "chartType": {
+      "type": "string",
+      "title": "Chart type",
+      "description": "The name style of how the item will be rendered on the chart"
+    },
+    "featureTimesProperty": {
+      "type": "string",
+      "title": "Feature times property",
+      "description": "The name of a property in a feature returned from this layer's feature query service\nthat indicates the times at which this layer covers this position. For example, historical and\nnear-real-time satellite imagery often comes as daily swaths, with a given area on the globe\npotentially only covered every number of days."
+    }
+  },
+  "allOf": [
+    {
+      "$ref": "CatalogItem.json"
+    },
+    {
+      "$ref": "CatalogMember.json"
+    }
+  ]
+}

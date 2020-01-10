@@ -1,0 +1,27 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "options": {
+        "hidden": true
+      },
+      "type": "string",
+      "enum": [
+        "gltf"
+      ]
+    }
+  },
+  "description": "A CatalogItem representing a GL Transmission Format (glTF) model.\nThis catalog item will only be visible in the 3D (Cesium) view.",
+  "title": "GL Transmission Format (glTF)",
+  "allOf": [
+    {
+      "$ref": "CatalogItem.json"
+    },
+    {
+      "$ref": "CatalogMember.json"
+    },
+    {
+      "$ref": "GltfCatalogItem.json"
+    }
+  ]
+}
